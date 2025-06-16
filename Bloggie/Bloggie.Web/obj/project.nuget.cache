@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0g/TSfL40nI=",
+  "dgSpecHash": "JZ/q1SV29fo=",
   "success": true,
-  "projectFilePath": "E:\\Project\\Bloggie\\Bloggie\\Bloggie.Web\\Bloggie.Web.csproj",
+  "projectFilePath": "H:\\Project Nafinec Git\\Bloggie_Main\\Bloggie\\Bloggie.Web\\Bloggie.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nec\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Nec\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

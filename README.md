@@ -20,6 +20,8 @@ Progression Status
 48 - Add Image Upload To Froala WYSIWYG Editor
 51 - Displaying Blogs and Hero Section
 52 - Display Single Blog Post and Blog Details
+53 - Displaying Tags On Home Page -- Done
+Doing Auth
 =====================================================
 
 ======================================================

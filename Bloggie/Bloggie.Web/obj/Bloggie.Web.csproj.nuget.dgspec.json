@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Project\\Bloggie\\Bloggie\\Bloggie.Web\\Bloggie.Web.csproj": {}
+    "H:\\Project Nafinec Git\\Bloggie_Main\\Bloggie\\Bloggie.Web\\Bloggie.Web.csproj": {}
   },
   "projects": {
-    "E:\\Project\\Bloggie\\Bloggie\\Bloggie.Web\\Bloggie.Web.csproj": {
+    "H:\\Project Nafinec Git\\Bloggie_Main\\Bloggie\\Bloggie.Web\\Bloggie.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Project\\Bloggie\\Bloggie\\Bloggie.Web\\Bloggie.Web.csproj",
+        "projectUniqueName": "H:\\Project Nafinec Git\\Bloggie_Main\\Bloggie\\Bloggie.Web\\Bloggie.Web.csproj",
         "projectName": "Bloggie.Web",
-        "projectPath": "E:\\Project\\Bloggie\\Bloggie\\Bloggie.Web\\Bloggie.Web.csproj",
+        "projectPath": "H:\\Project Nafinec Git\\Bloggie_Main\\Bloggie\\Bloggie.Web\\Bloggie.Web.csproj",
         "packagesPath": "C:\\Users\\Nec\\.nuget\\packages\\",
-        "outputPath": "E:\\Project\\Bloggie\\Bloggie\\Bloggie.Web\\obj\\",
+        "outputPath": "H:\\Project Nafinec Git\\Bloggie_Main\\Bloggie\\Bloggie.Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
