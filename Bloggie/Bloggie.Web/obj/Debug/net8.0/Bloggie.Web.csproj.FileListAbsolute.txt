@@ -300,3 +300,8 @@ H:\Project Nafinec Git\Bloggie_Main\Bloggie\Bloggie.Web\obj\Debug\net8.0\refint\
 H:\Project Nafinec Git\Bloggie_Main\Bloggie\Bloggie.Web\obj\Debug\net8.0\Bloggie.Web.pdb
 H:\Project Nafinec Git\Bloggie_Main\Bloggie\Bloggie.Web\obj\Debug\net8.0\Bloggie.Web.genruntimeconfig.cache
 H:\Project Nafinec Git\Bloggie_Main\Bloggie\Bloggie.Web\obj\Debug\net8.0\ref\Bloggie.Web.dll
+H:\Project Nafinec Git\Bloggie_Main\Bloggie\Bloggie.Web\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+H:\Project Nafinec Git\Bloggie_Main\Bloggie\Bloggie.Web\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+H:\Project Nafinec Git\Bloggie_Main\Bloggie\Bloggie.Web\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+H:\Project Nafinec Git\Bloggie_Main\Bloggie\Bloggie.Web\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+H:\Project Nafinec Git\Bloggie_Main\Bloggie\Bloggie.Web\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll

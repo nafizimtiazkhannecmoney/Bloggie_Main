@@ -22,8 +22,8 @@
 						<span class="badge bg-secondary mb-3">@tag.Name</span>
 					}
 				</div>
-				<img src="@Model.FeaturedImageUrl" alt="@Model.Heading" class="img-fluid mb-3" />
-				<div class="mb-3">
+				<img src="@Model.FeaturedImageUrl" alt="@Model.Heading" class="d-block img-fluid mb-3" />
+				<div class="mb-3 blog-details-content">
 					@Html.Raw(Model.Content)
 				</div>
 			}

@@ -1,10 +1,11 @@
 
+Roles:
 	Super Admin
 	Admin
 	User
 
 *** We will Seed The intitial data of Roles and the Super Admin Information Using EF Core
-*** Possible Fixes
+|*** Possible Fixes ***|
 public BloggieDbContext(DbContextOptions<BloggieDbContext> options) : base(options)
 public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
 
@@ -15,7 +16,7 @@ Microsoft.AspNetCore.Identity.EntityFrameworkCore
 ================================================================================================
 
 
-2. Create AuthDbContext.cs
+2. Create AuthDbContext.cs   (Inside Data Folder)
 ================================================================================================
 AuthDbContext.cs (Inherit From IdentityDbContext)
 ================================================================================================
@@ -137,12 +138,12 @@ appsettings.json
 ================================================================================================
 
 
-4. Inject AuthDbContext to Program.cs
+4. Inject AuthDbContext to Program.cs      (connectionString added, Identity Dependency Injected, Authentication Pipeline Added)
 ================================================================================================
 Program.cs
 ================================================================================================
 {
-	using Bloggie.Web.Data;
+using Bloggie.Web.Data;
 using Bloggie.Web.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -303,6 +304,23 @@ namespace Bloggie.Web.Controllers
 
 } 
 ================================================================================================
+
+
+================================================================================================
+7. RegisterViewModel in the ViewModels Folder
+================================================================================================
+namespace Bloggie.Web.Models.ViewModels
+{
+    public class RegisterViewModel
+    {
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+}
+================================================================================================
+
+
 
 ================================================================================================
 Register.cshtml
