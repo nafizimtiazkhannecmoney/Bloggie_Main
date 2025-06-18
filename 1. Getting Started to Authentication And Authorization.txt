@@ -138,7 +138,7 @@ appsettings.json
 ================================================================================================
 
 
-4. Inject AuthDbContext to Program.cs      (connectionString added, Identity Dependency Injected, Authentication Pipeline Added)
+4. Inject AuthDbContext to Program.cs      (connectionString added, Identity Dependency Injected, Authentication Pipeline Added, Identity options)
 ================================================================================================
 Program.cs
 ================================================================================================
@@ -364,6 +364,20 @@ Register.cshtml
 
 }
 ================================================================================================
+
+================================================================================================
+LoginViewModel.cs
+================================================================================================
+namespace Bloggie.Web.Models.ViewModels
+{
+    public class LoginViewModel
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+}
+================================================================================================
+
 
 ================================================================================================
 Login.cshtml

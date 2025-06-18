@@ -21,7 +21,7 @@ Progression Status
 51 - Displaying Blogs and Hero Section
 52 - Display Single Blog Post and Blog Details
 53 - Displaying Tags On Home Page -- Done
-Doing Auth -- Currently on 58, 8 Minute
+Doing Auth -- Currently on 59, 4 Minute
 =====================================================
 
 ======================================================
@@ -29,6 +29,7 @@ Nugets Used
 ------------------------------------------------------
 Microsoft.EntityFrameworkCore.SqlServer
 Microsoft.EntityFrameworkCore.Tools
+Microsoft.AspNetCore.Identity.EntityFrameworkCore
 ======================================================
 
 
