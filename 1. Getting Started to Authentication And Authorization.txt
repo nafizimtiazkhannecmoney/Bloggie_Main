@@ -1,18 +1,21 @@
 
 Roles:
-	Super Admin
-	Admin
-	User
+  - Super Admin
+  - Admin
+  - User
 
-*** We will Seed The intitial data of Roles and the Super Admin Information Using EF Core
+***We will seed the initial data of roles and the Super Admin information using EF Core
+
 |*** Possible Fixes ***|
-public BloggieDbContext(DbContextOptions<BloggieDbContext> options) : base(options)
-public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
+public BloggieDbContext(DbContextOptions<BloggieDbContext> options) : base(options) 
+public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options) 
+
+The "Logout" action doesn't require a view page.
 
 ================================================================================================
-	START
-1. Install Nugets
-Microsoft.AspNetCore.Identity.EntityFrameworkCore
+START
+1. Install NuGet Packages
+   - Microsoft.AspNetCore.Identity.EntityFrameworkCore
 ================================================================================================
 
 
@@ -28,7 +31,7 @@ namespace Bloggie.Web.Data
 {
     public class AuthDbContext : IdentityDbContext
     {
-        public AuthDbContext(DbContextOptions options) : base(options)
+        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         {
         }
 
@@ -163,6 +166,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("BloggieAuthDbCon
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AuthDbContext>();
 
+// Configure the IdentityOptions to customize password requirements, such as disabling upper and lowercase requirements.
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default Settings
@@ -420,7 +424,8 @@ Login.cshtml
 _Layout.cshtml
 ================================================================================================
 {
-Inject this at the Top
+Inject SignInManager at the Top
+
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> signInManager
 
@@ -444,4 +449,27 @@ Inject this at the Top
 ================================================================================================
 
 
-Logout dosent have any view Page
+***The logout action does not require a view because the user is simply signed out and redirected to the home page.
+
+
+*** Now we  Add Authorization 
+
+Add [Authorize] on the Important IActionResult to lock them up for Unauthorized
+================================================================================================
+ [Authorize]
+ [HttpGet]
+ public IActionResult Add()
+ {
+     return View();
+ }
+================================================================================================
+
+Only Admin or Super Admin Can Access this
+================================================================================================
+[Authorize(Roles = "Admin")]
+[HttpGet]
+public IActionResult Add()
+{
+    return View();
+}
+================================================================================================

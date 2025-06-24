@@ -7,10 +7,12 @@ namespace Bloggie.Web.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
 
-        public AccountController(UserManager<IdentityUser> userManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         [HttpGet]
@@ -43,7 +45,7 @@ namespace Bloggie.Web.Controllers
             }
 
             //show error message notification
-            return View();
+            return View(); 
         }
 
         [HttpGet]
@@ -55,7 +57,21 @@ namespace Bloggie.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            return View(); // Placeholder for login logic
+            var signInResult = await signInManager.PasswordSignInAsync(loginViewModel.Username, loginViewModel.Password, false, false);
+            if (signInResult.Succeeded && signInResult != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Show error message notification
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        { 
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
     }
 }

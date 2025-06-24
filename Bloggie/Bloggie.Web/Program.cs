@@ -15,6 +15,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("BloggieDbConnect
 builder.Services.AddDbContext<AuthDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("BloggieAuthDbConnectionString")));
 
+
+// Configure the IdentityOptions to customize password requirements, such as disabling upper and lowercase requirements.
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default Password Settings
