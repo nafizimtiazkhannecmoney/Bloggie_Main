@@ -21,7 +21,7 @@ Progression Status
 51 - Displaying Blogs and Hero Section
 52 - Display Single Blog Post and Blog Details
 53 - Displaying Tags On Home Page -- Done
-Doing Auth -- Currently on 60, 2 Minute
+Doing Auth -- Currently on 67- start from 67
 =====================================================
 
 ======================================================

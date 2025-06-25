@@ -11,6 +11,8 @@ public BloggieDbContext(DbContextOptions<BloggieDbContext> options) : base(optio
 public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options) 
 
 The "Logout" action doesn't require a view page.
+Make A view for AccessDenied
+
 
 ================================================================================================
 START
@@ -278,21 +280,32 @@ namespace Bloggie.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login() 
+        public IActionResult Login(string ReturnUrl) 
         {
-            return View();
+            var model = new LoginViewModel
+            {
+                ReturnUrl = ReturnUrl
+            };
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            var signInResult = await signInManager.PasswordSignInAsync(loginViewModel.Username, loginViewModel.Password, false, false);
+            var signInResult = await signInManager.PasswordSignInAsync(loginViewModel.Username, 
+                loginViewModel.Password, false, false);
+
             if (signInResult != null && signInResult.Succeeded)
             {
+                if (!string.IsNullOrWhiteSpace(loginViewModel.ReturnUrl))
+                {
+                    return Redirect(loginViewModel.ReturnUrl);
+                }
+
                 return RedirectToAction("Index", "Home");
             }
 
-            // Show Errors
+            // Show error message notification
             return View();
         }
 
@@ -301,6 +314,11 @@ namespace Bloggie.Web.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        public IActionResult AccessDenied() 
+        {
+            return View();
         }
     }
 }
@@ -378,6 +396,7 @@ namespace Bloggie.Web.Models.ViewModels
     {
         public string Username { get; set; }
         public string Password { get; set; }
+        public string? ReturnUrl { get; set; }
     }
 }
 ================================================================================================
@@ -411,6 +430,7 @@ Login.cshtml
                 <div class="mb-3">
                     <button type="submit" class="btn btn-dark">Login</button>
                 </div>
+                <input type="hidden" asp-for="ReturnUrl" />
             </form>
 
         </div>
@@ -430,6 +450,20 @@ Inject SignInManager at the Top
 @inject SignInManager<IdentityUser> signInManager
 
 
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Admin
+        </a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" asp-area="" asp-controller="AdminTags" asp-action="Add">Add Tag</a></li>
+            <li><a class="dropdown-item" asp-area="" asp-controller="AdminTags" asp-action="List">Show All Tags</a></li>
+            <li><a class="dropdown-item" asp-area="" asp-controller="AdminBlogPosts" asp-action="Add">Add BlogPost</a></li>
+            <li><a class="dropdown-item" asp-area="" asp-controller="AdminBlogPosts" asp-action="List">Show All BlogPost</a></li>
+        </ul>
+    </li>
+}
 <div class="d-flex align-items-center">
     @if (signInManager.IsSignedIn(User))
     {
@@ -473,3 +507,5 @@ public IActionResult Add()
     return View();
 }
 ================================================================================================
+
+*** [Authorize(Roles = "Admin")] can also be applied on The Controller

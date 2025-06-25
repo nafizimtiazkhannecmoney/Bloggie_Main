@@ -1,0 +1,175 @@
+LI
+
+1.Inside Domain Create >> BlogPostLike
+
+---------------------------------------------------------
+namespace Bloggie.Web.Models.Domain
+{
+    public class BlogPostLike
+    {
+        public Guid Id { get; set; }
+        public Guid BlogPostId { get; set; }
+        public Guid UserId { get; set; }
+    }
+}
+---------------------------------------------------------
+
+
+2. Add Navigation Prpertie
+---------------------------------------------------------
+namespace Bloggie.Web.Models.Domain
+{
+    public class BlogPost
+    {
+        public Guid Id { get; set; }
+        public string Heading { get; set; }
+        public string PageTitle { get; set; }
+        public string Content { get; set; }
+        public string ShortDescription { get; set; }
+        public string FeaturedImageUrl { get; set; }
+        public string UrlHandle { get; set; }
+        public DateTime PublishedDate { get; set; }
+        public string Author { get; set; }
+        public bool Visible { get; set; }
+
+        // Navigation Propertie
+        public ICollection<Tag> Tags { get; set; }
+        public ICollection<BlogPostLike> Likes { get; set; }
+    }
+}
+---------------------------------------------------------
+
+3.BloggieDbContext
+---------------------------------------------------------
+ public class BloggieDbContext : DbContext
+ {
+     public BloggieDbContext(DbContextOptions<BloggieDbContext> options) : base(options)
+     {   
+     }
+
+     public DbSet<BlogPost> BlogPosts { get; set; }
+     public DbSet<Tag> Tags { get; set; }
+     public DbSet<BlogPostLike> BlogPostLikes { get; set; }
+ }
+---------------------------------------------------------
+
+4. Now We do migration
+
+Add-Migration "Adding Like Functionality" -context "BloggieDbContext"
+Update-Database -context "BloggieDbContext"
+
+
+5. Create Like Repository to get the like information
+
+Create Interface >> IBlogPostLikeRepository.cs
+---------------------------------------------------------
+namespace Bloggie.Web.Repositories
+{
+    public interface IBlogPostLikeRepository
+    {
+        Task<int> GetTotalLikes(Guid blogPostId);
+    }
+}
+---------------------------------------------------------
+
+6. Add Implemented Class BlogPostLikeRepository.cs
+---------------------------------------------------------
+using Bloggie.Web.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace Bloggie.Web.Repositories
+{
+    public class BlogPostLikeRepository : IBlogPostLikeRepository
+    {
+        private readonly BloggieDbContext _bloggieDbContext;
+
+        public BlogPostLikeRepository(BloggieDbContext bloggieDbContext)
+        {
+            this._bloggieDbContext = bloggieDbContext;
+        }
+        public async Task<int> GetTotalLikes(Guid blogPostId)
+        {
+            return await _bloggieDbContext.BlogPostLikes.CountAsync(x => x.BlogPostId == blogPostId);
+        }
+    }
+}
+---------------------------------------------------------
+
+7. Now We inject this service
+---------------------------------------------------------
+builder.Services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepository>(); // Registering the BlogPostLikeRepository with the DI container
+---------------------------------------------------------
+
+8. Nowmake a view model to show the blogpost and like numbers
+BlogDetailsViewModel.cs 
+---------------------------------------------------------
+using Bloggie.Web.Models.Domain;
+namespace Bloggie.Web.Models.ViewModels
+{
+    public class BlogDetailsViewModel
+    {
+        public Guid Id { get; set; }
+        public string Heading { get; set; }
+        public string PageTitle { get; set; }
+        public string Content { get; set; }
+        public string ShortDescription { get; set; }
+        public string FeaturedImageUrl { get; set; }
+        public string UrlHandle { get; set; }
+        public DateTime PublishedDate { get; set; }
+        public string Author { get; set; }
+        public bool Visible { get; set; }
+        public ICollection<Tag> Tags { get; set; }
+        public int TotalLikes { get; set; }
+    }
+}
+---------------------------------------------------------
+
+9. BlogsController Code
+---------------------------------------------------------
+public class BlogsController : Controller
+{
+    private readonly IBlogPostRepository _blogPostRepository;
+    private readonly IBlogPostLikeRepository _blogPostLikeRepository;
+
+    public BlogsController(IBlogPostRepository blogPostRepository, IBlogPostLikeRepository blogPostLikeRepository)
+    {
+        this._blogPostRepository = blogPostRepository;
+        this._blogPostLikeRepository = blogPostLikeRepository;
+    }
+    [HttpGet]
+    public async Task<IActionResult> Index(string urlHandle)
+    {
+        var blogPost = await _blogPostRepository.GetByUrlHandleAsync(urlHandle);
+        var blogPostLikeViewModel = new BlogDetailsViewModel();
+        if (blogPost != null)
+        {
+            var totalLikes = await _blogPostLikeRepository.GetTotalLikes(blogPost.Id);
+            // Domain to ViewModel Mapping
+            blogPostLikeViewModel = new BlogDetailsViewModel
+            {
+                Id = blogPost.Id,
+                Content = blogPost.Content,
+                PageTitle = blogPost.PageTitle,
+                Author = blogPost.Author,
+                FeaturedImageUrl = blogPost.FeaturedImageUrl,
+                Heading = blogPost.Heading,
+                PublishedDate = blogPost.PublishedDate,
+                ShortDescription = blogPost.ShortDescription,
+                UrlHandle = blogPost.UrlHandle,
+                Visible = blogPost.Visible,
+                Tags = blogPost.Tags,
+                TotalLikes = totalLikes
+            };
+        }
+        return View(blogPostLikeViewModel);
+    }
+}
+---------------------------------------------------------
+
+10. Now Change the viewmodel in index.html page
+---------------------------------------------------------
+@model Bloggie.Web.Models.ViewModels.BlogDetailsViewModel  
+<span>@Model.TotalLikes</span> Likes
+---------------------------------------------------------
+
+11. Now we Implement the functionality for an user to give like input

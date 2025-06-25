@@ -42,6 +42,7 @@ namespace Bloggie.Web.Controllers
             return RedirectToAction("List", "AdminTags");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> List()
         {

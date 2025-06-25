@@ -34,6 +34,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 builder.Services.AddScoped<ITagRepository, TagRepository>();                    // Registering the TagRepository with the DI container
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();         //  Registering the BlogPostRepository with the DI container
 builder.Services.AddScoped<IImageRepository, CloudinaryImageRepository>();    //   Registering the CloudinaryImageRepository with the DI container 
+builder.Services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepository>(); // Registering the BlogPostLikeRepository with the DI container
 
 var app = builder.Build();
 
